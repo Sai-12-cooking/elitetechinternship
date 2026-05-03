@@ -1,0 +1,635 @@
+/* ========================================
+   Task 3: WhatsApp Message Search Redesign
+   CSS Stylesheet
+   
+   Design Philosophy:
+   - Mobile-first approach (375x812px iPhone dimensions)
+   - Minimalist design following WhatsApp's aesthetic
+   - Accessibility-focused with clear contrast and readable typography
+   - Touch-friendly interface with appropriate target sizes
+   ======================================== */
+
+/* ========================================
+   1. GLOBAL STYLES & RESET
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* ========================================
+   2. MOBILE CONTAINER
+   
+   Purpose: Simulates an iPhone screen (375x812px)
+   - Centered on desktop for demonstration
+   - Box shadow creates visual separation
+   - Rounded corners match modern phone design
+   ======================================== */
+
+.mobile-container {
+    /* iPhone SE/11 dimensions (375x812px) */
+    width: 375px;
+    height: 812px;
+    
+    /* Centered on screen */
+    margin: 20px auto;
+    
+    /* Visual separation and depth */
+    background-color: #fff;
+    border-radius: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    
+    /* Create internal scroll area */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    
+    /* Add status bar simulation */
+    border: 12px solid #000;
+}
+
+/* ========================================
+   3. APP HEADER
+   
+   Purpose: Navigation header consistent with WhatsApp
+   - Fixed positioning for persistent navigation
+   - Green accent color (#25D366) matches WhatsApp brand
+   - Flexbox layout for alignment
+   ======================================== */
+
+.app-header {
+    /* Fixed header that stays at top when scrolling */
+    background: linear-gradient(135deg, #128c7e 0%, #25D366 100%);
+    color: white;
+    padding: 12px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.header-content {
+    /* Flexbox layout for header elements */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    height: 56px;
+}
+
+.header-title {
+    /* Main title styling */
+    font-size: 18px;
+    font-weight: 600;
+    flex: 1;
+    text-align: center;
+    letter-spacing: 0.2px;
+}
+
+.back-btn,
+.header-action {
+    /* Header buttons: back and menu */
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    width: 44px;
+    height: 44px;
+    
+    /* Touch-friendly size: 44x44px minimum for WCAG compliance */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Smooth interaction feedback */
+    transition: opacity 0.2s ease;
+    border-radius: 50%;
+}
+
+.back-btn:active,
+.header-action:active {
+    opacity: 0.7;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ========================================
+   4. SEARCH SECTION
+   
+   Purpose: Main search interface with input and filters
+   - Organized layout with clear visual hierarchy
+   - Consistent spacing using 8px grid system
+   - Responsive filter layout
+   ======================================== */
+
+.search-section {
+    padding: 16px;
+    background-color: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    flex-shrink: 0;
+}
+
+/* Search Input Container: Text field with icons */
+.search-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 24px;
+    padding: 0 12px;
+    margin-bottom: 16px;
+    height: 40px;
+    
+    /* Visual feedback on focus */
+    transition: background-color 0.2s ease;
+}
+
+.search-input-container:focus-within {
+    background-color: #e8e8e8;
+    box-shadow: 0 0 0 2px #25D366;
+}
+
+.search-icon {
+    font-size: 16px;
+    margin-right: 8px;
+    color: #999;
+}
+
+.search-input {
+    /* Input field styling */
+    flex: 1;
+    border: none;
+    background: none;
+    font-size: 16px;
+    outline: none;
+    color: #333;
+    padding: 8px 0;
+}
+
+.search-input::placeholder {
+    color: #999;
+}
+
+.clear-btn {
+    /* Clear button: removes search text */
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.clear-btn:active {
+    color: #333;
+}
+
+/* Filter Controls: Advanced search options */
+.filter-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-label {
+    /* Labels for filter dropdowns */
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    min-width: 60px;
+    white-space: nowrap;
+}
+
+.filter-select {
+    /* Dropdown menus for each filter type */
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    
+    /* Smooth styling transitions */
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    
+    /* Remove default appearance on some browsers */
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 24px;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #25D366;
+    background-color: #fff;
+}
+
+.filter-select:hover {
+    border-color: #ccc;
+}
+
+/* Search Button: Triggers the search operation */
+.search-btn {
+    /* Primary action button */
+    width: 100%;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #128c7e 0%, #25D366 100%);
+    color: white;
+    border: none;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.1s ease;
+    
+    /* Touch feedback */
+    active: pointer-events, none;
+}
+
+.search-btn:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+}
+
+.search-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========================================
+   5. RESULTS SECTION
+   
+   Purpose: Display search results with multiple states
+   - Empty state: guidance when no search performed
+   - Loading state: feedback while searching
+   - No results: helpful message when no matches found
+   - Results list: scrollable container for result cards
+   ======================================== */
+
+.results-section {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Empty State: Initial state before search */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    color: #999;
+}
+
+.empty-state-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.empty-state-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.empty-state-subtext {
+    font-size: 14px;
+    color: #999;
+}
+
+/* Loading State: Visual feedback while searching */
+.loading-state {
+    display: none;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px 20px;
+    text-align: center;
+    color: #999;
+}
+
+.loading-state.active {
+    display: flex;
+}
+
+.spinner {
+    /* Animated loading spinner */
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f0f0f0;
+    border-top: 4px solid #25D366;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* No Results State: When search returns empty */
+.no-results {
+    display: none;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px 20px;
+    text-align: center;
+    color: #999;
+}
+
+.no-results.active {
+    display: flex;
+}
+
+.no-results-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.no-results-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.no-results-subtext {
+    font-size: 14px;
+    color: #999;
+}
+
+/* Results List: Container for search result cards */
+.results-list {
+    width: 100%;
+    padding: 8px 0;
+}
+
+/* ========================================
+   6. RESULT CARD
+   
+   Purpose: Individual search result display
+   - Shows message preview with context
+   - Uses avatar + initials for sender identification
+   - Includes timestamp and media indicator
+   - Interactive element to navigate to message
+   ======================================== */
+
+.result-card {
+    /* Container for each search result */
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    /* Hover feedback for desktop, touch feedback for mobile */
+    gap: 12px;
+}
+
+.result-card:active {
+    background-color: #f5f5f5;
+}
+
+.result-card:last-child {
+    border-bottom: none;
+}
+
+/* Avatar: Visual representation of sender */
+.result-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #25D366 0%, #128c7e 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+/* Content Container: Message details */
+.result-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Header: Sender name and timestamp */
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+    gap: 8px;
+}
+
+.result-sender {
+    font-weight: 600;
+    color: #333;
+    font-size: 15px;
+}
+
+.result-time {
+    font-size: 12px;
+    color: #999;
+    white-space: nowrap;
+}
+
+/* Preview: Message snippet with highlighted keyword */
+.result-preview {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.4;
+    
+    /* Prevent text overflow on small screens */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+}
+
+/* Highlight searched keyword in preview */
+.result-preview ::highlight(search-results) {
+    background-color: #fff3cd;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Media Badge: Indicator for message type */
+.result-media-badge {
+    display: inline-block;
+    font-size: 12px;
+    color: #25D366;
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+/* Action Button: Navigate to message */
+.result-action {
+    background: none;
+    border: none;
+    color: #25D366;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+    width: 44px;
+    height: 44px;
+    
+    /* Center the icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Touch-friendly size */
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.result-action:active {
+    background-color: #f0f0f0;
+}
+
+/* ========================================
+   7. RESULT COUNTER
+   
+   Purpose: Display number of results found
+   - Positioned at bottom of results section
+   - Provides quick information about result count
+   ======================================== */
+
+.result-counter {
+    padding: 12px 16px;
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    background-color: #fafafa;
+    border-top: 1px solid #f0f0f0;
+    flex-shrink: 0;
+}
+
+#resultCountText {
+    font-weight: 500;
+}
+
+/* ========================================
+   8. UTILITY STATES
+   
+   Purpose: Control visibility of UI elements
+   ======================================== */
+
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    display: block !important;
+}
+
+/* ========================================
+   9. RESPONSIVE DESIGN & ACCESSIBILITY
+   
+   Purpose: Ensure usability across devices and for all users
+   ======================================== */
+
+/* Tablet and larger screens: Show larger mockup */
+@media (min-width: 768px) {
+    .mobile-container {
+        margin: 40px auto;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Reduced Motion: Respect prefers-reduced-motion setting */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High Contrast Mode: Improve visibility in high contrast */
+@media (prefers-contrast: more) {
+    .search-input-container {
+        border: 2px solid #333;
+    }
+    
+    .filter-select {
+        border-width: 2px;
+    }
+    
+    .search-btn {
+        border: 2px solid #000;
+    }
+}
+
+/* Dark Mode Support: Respect system dark mode preference */
+@media (prefers-color-scheme: dark) {
+    .mobile-container,
+    .search-section,
+    .results-section {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+    }
+    
+    .search-input {
+        color: #e0e0e0;
+    }
+    
+    .search-input-container {
+        background-color: #333;
+    }
+    
+    .result-preview {
+        color: #ccc;
+    }
+    
+    .filter-select {
+        background-color: #333;
+        color: #e0e0e0;
+        border-color: #555;
+    }
+}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Message Search - Redesigned</title>
+    <link rel="stylesheet" href="task3.css">
+</head>
+<body>
+    <!-- Mobile App Container: 375x812px - Standard iPhone dimensions -->
+    <div class="mobile-container">
+        
+        <!-- Header Section: WhatsApp Style Navigation -->
+        <header class="app-header">
+            <div class="header-content">
+                <button class="back-btn" id="backBtn" aria-label="Go back">
+                    <span class="icon">‹</span>
+                </button>
+                <h1 class="header-title">Search Messages</h1>
+                <button class="header-action" aria-label="More options">
+                    <span class="icon">⋮</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Search Container: Main search interface -->
+        <section class="search-section">
+            <!-- Search Input Field: Where users type their query -->
+            <div class="search-input-container">
+                <span class="search-icon">🔍</span>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Search messages..."
+                    aria-label="Search messages"
+                >
+                <button class="clear-btn" id="clearBtn" aria-label="Clear search">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Filter Controls: Advanced filtering options for refined search results -->
+            <div class="filter-controls">
+                <!-- Date Range Filter: Filter messages by time period -->
+                <div class="filter-group">
+                    <label for="dateFilter" class="filter-label">📅 Date:</label>
+                    <select id="dateFilter" class="filter-select" aria-label="Filter by date range">
+                        <option value="all">Any time</option>
+                        <option value="24h">Last 24 hours</option>
+                        <option value="week">Last week</option>
+                        <option value="month">Last month</option>
+                        <option value="custom">Custom range</option>
+                    </select>
+                </div>
+
+                <!-- Sender Filter: Filter messages by who sent them -->
+                <div class="filter-group">
+                    <label for="senderFilter" class="filter-label">👤 From:</label>
+                    <select id="senderFilter" class="filter-select" aria-label="Filter by sender">
+                        <option value="all">Anyone</option>
+                        <option value="sarah">Sarah</option>
+                        <option value="john">John</option>
+                        <option value="team">Team Chat</option>
+                    </select>
+                </div>
+
+                <!-- Media Type Filter: Filter by message type (text, image, video, document) -->
+                <div class="filter-group">
+                    <label for="mediaFilter" class="filter-label">📎 Type:</label>
+                    <select id="mediaFilter" class="filter-select" aria-label="Filter by media type">
+                        <option value="all">All types</option>
+                        <option value="text">Text only</option>
+                        <option value="image">Images</option>
+                        <option value="video">Videos</option>
+                        <option value="document">Documents</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Search Action Button: Trigger search with applied filters -->
+            <button class="search-btn" id="searchBtn" aria-label="Search with filters">
+                Search
+            </button>
+        </section>
+
+        <!-- Results Container: Display search results or empty state -->
+        <section class="results-section">
+            
+            <!-- Empty State: Shown when no search has been performed -->
+            <div class="empty-state" id="emptyState">
+                <div class="empty-state-icon">🔍</div>
+                <p class="empty-state-text">Try searching for messages or documents</p>
+                <p class="empty-state-subtext">Use filters to narrow down your search</p>
+            </div>
+
+            <!-- Results List: Contains search result cards -->
+            <div class="results-list" id="resultsList">
+                <!-- Messages will be dynamically inserted here by JavaScript -->
+            </div>
+
+            <!-- Loading State: Shown while search is in progress -->
+            <div class="loading-state" id="loadingState">
+                <div class="spinner"></div>
+                <p>Searching...</p>
+            </div>
+
+            <!-- No Results State: Shown when search returns no matches -->
+            <div class="no-results" id="noResults">
+                <div class="no-results-icon">😕</div>
+                <p class="no-results-text">No messages found</p>
+                <p class="no-results-subtext">Try different keywords or adjust filters</p>
+            </div>
+        </section>
+
+        <!-- Result Counter: Shows total number of results -->
+        <div class="result-counter" id="resultCounter">
+            <span id="resultCountText"></span>
+        </div>
+    </div>
+
+    <!-- Sample Message Templates: Used by JavaScript to render search results -->
+    <!-- Each message card includes: sender avatar, name, preview text with highlighting, timestamp, and media indicator -->
+    <template id="messageTemplate">
+        <div class="result-card">
+            <!-- Avatar: Visual representation of the sender -->
+            <div class="result-avatar" data-initial="">
+            </div>
+            
+            <!-- Content Container: Message details -->
+            <div class="result-content">
+                <!-- Header: Sender name and timestamp -->
+                <div class="result-header">
+                    <span class="result-sender"></span>
+                    <span class="result-time"></span>
+                </div>
+                
+                <!-- Preview: Snippet of the message with keyword highlighting -->
+                <div class="result-preview"></div>
+                
+                <!-- Media Badge: Indicates type of media (image, video, document) -->
+                <div class="result-media-badge"></div>
+            </div>
+            
+            <!-- Action Button: Navigate to this message in conversation -->
+            <button class="result-action" aria-label="Jump to message">
+                →
+            </button>
+        </div>
+    </template>
+
+    <script src="task3.js"></script>
+</body>
+</html>
