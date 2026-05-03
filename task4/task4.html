@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VirtualShoppe AR - Spatial UI Prototype</title>
+    <link rel="stylesheet" href="task4.css">
+</head>
+<body>
+    <!-- VR Environment Container: Dark, immersive background simulating VR experience -->
+    <div class="vr-environment">
+        
+        <!-- Background: Simulated 3D space with depth effect -->
+        <div class="vr-background">
+            <div class="bg-layer bg-layer-1"></div>
+            <div class="bg-layer bg-layer-2"></div>
+            <div class="bg-layer bg-layer-3"></div>
+        </div>
+
+        <!-- HUD (Heads-Up Display): Main interactive interface -->
+        <div class="hud-container">
+
+            <!-- Top Status Bar: Displays system information and battery status -->
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="icon">📡</span>
+                    <span class="text">VirtualShoppe AR</span>
+                </div>
+                <div class="status-item">
+                    <span class="icon">🔋</span>
+                    <span class="text">85%</span>
+                </div>
+            </div>
+
+            <!-- Central Display Area: Main product visualization zone -->
+            <div class="central-display">
+                
+                <!-- 3D Product Viewer: Where furniture is displayed and manipulated -->
+                <div class="product-viewer" id="productViewer">
+                    <div class="product-container" id="productContainer">
+                        <!-- 3D Product Model Representation -->
+                        <div class="furniture-item sofa" id="furnitureItem">
+                            <div class="furniture-top"></div>
+                            <div class="furniture-front"></div>
+                            <div class="furniture-side"></div>
+                        </div>
+                        
+                        <!-- Product Info Overlay: Shows current selection details -->
+                        <div class="product-info" id="productInfo">
+                            <div class="product-name">Modern Sofa</div>
+                            <div class="product-price">$1,299</div>
+                        </div>
+                    </div>
+
+                    <!-- Spatial Grid: Shows valid placement zones and measurements -->
+                    <div class="spatial-grid" id="spatialGrid">
+                        <div class="grid-line horizontal"></div>
+                        <div class="grid-line vertical"></div>
+                    </div>
+                </div>
+
+                <!-- Gesture Guide Panel: Educates user on available interactions -->
+                <div class="gesture-guide" id="gestureGuide">
+                    <div class="gesture-item">
+                        <span class="gesture-icon">👀</span>
+                        <span class="gesture-text">Gaze to Select</span>
+                    </div>
+                    <div class="gesture-item">
+                        <span class="gesture-icon">✋</span>
+                        <span class="gesture-text">Open Palm for Menu</span>
+                    </div>
+                    <div class="gesture-item">
+                        <span class="gesture-icon">☝️</span>
+                        <span class="gesture-text">Point to Rotate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contextual Menu: Floats in user's field of view, reacts to attention -->
+            <div class="contextual-menu" id="contextualMenu">
+                <div class="menu-title">Product Options</div>
+                <div class="menu-options">
+                    
+                    <!-- Size Option: Adjust furniture dimensions -->
+                    <button class="menu-option size-option" id="sizeOption" 
+                            data-action="size" aria-label="Adjust furniture size">
+                        <span class="option-icon">📏</span>
+                        <span class="option-label">Size</span>
+                        <span class="option-desc">180cm x 90cm</span>
+                    </button>
+
+                    <!-- Color Option: Choose from available colors -->
+                    <button class="menu-option color-option" id="colorOption" 
+                            data-action="color" aria-label="Change furniture color">
+                        <span class="option-icon">🎨</span>
+                        <span class="option-label">Color</span>
+                        <span class="option-desc">Charcoal Gray</span>
+                    </button>
+
+                    <!-- Material Option: Select material/fabric type -->
+                    <button class="menu-option material-option" id="materialOption" 
+                            data-action="material" aria-label="Change furniture material">
+                        <span class="option-icon">🧵</span>
+                        <span class="option-label">Material</span>
+                        <span class="option-desc">Linen Blend</span>
+                    </button>
+
+                    <!-- Info Option: Display detailed product information -->
+                    <button class="menu-option info-option" id="infoOption" 
+                            data-action="info" aria-label="View product information">
+                        <span class="option-icon">ℹ️</span>
+                        <span class="option-label">Details</span>
+                        <span class="option-desc">Specs & Reviews</span>
+                    </button>
+
+                    <!-- Placement Option: Adjust spatial positioning -->
+                    <button class="menu-option placement-option" id="placementOption" 
+                            data-action="placement" aria-label="Adjust furniture placement">
+                        <span class="option-icon">📍</span>
+                        <span class="option-label">Place</span>
+                        <span class="option-desc">Position in Space</span>
+                    </button>
+
+                    <!-- Cart Option: Add item to shopping cart -->
+                    <button class="menu-option cart-option" id="cartOption" 
+                            data-action="cart" aria-label="Add to cart">
+                        <span class="option-icon">🛒</span>
+                        <span class="option-label">Add to Cart</span>
+                        <span class="option-desc">Confirm Purchase</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Size Control Panel: Appears when size adjustment is selected -->
+            <div class="control-panel size-panel" id="sizePanel">
+                <div class="panel-header">Adjust Dimensions</div>
+                <div class="size-control">
+                    <label>Width</label>
+                    <input type="range" id="widthSlider" min="140" max="220" value="180" 
+                           class="control-slider" aria-label="Width slider">
+                    <span class="value-display" id="widthValue">180</span> cm
+                </div>
+                <div class="size-control">
+                    <label>Depth</label>
+                    <input type="range" id="depthSlider" min="60" max="120" value="90" 
+                           class="control-slider" aria-label="Depth slider">
+                    <span class="value-display" id="depthValue">90</span> cm
+                </div>
+                <div class="size-control">
+                    <label>Height</label>
+                    <input type="range" id="heightSlider" min="70" max="100" value="85" 
+                           class="control-slider" aria-label="Height slider">
+                    <span class="value-display" id="heightValue">85</span> cm
+                </div>
+                <button class="apply-btn" id="applySizeBtn">Apply Changes</button>
+            </div>
+
+            <!-- Color Selection Panel: Appears when color adjustment is selected -->
+            <div class="control-panel color-panel" id="colorPanel">
+                <div class="panel-header">Select Color</div>
+                <div class="color-options">
+                    <button class="color-swatch" id="colorCharcoal" data-color="charcoal" 
+                            style="background-color: #3a3a3a;" aria-label="Charcoal gray"></button>
+                    <button class="color-swatch" id="colorWhite" data-color="white" 
+                            style="background-color: #e8e8e8;" aria-label="Pearl white"></button>
+                    <button class="color-swatch" id="colorNavy" data-color="navy" 
+                            style="background-color: #1a3a4a;" aria-label="Navy blue"></button>
+                    <button class="color-swatch" id="colorCream" data-color="cream" 
+                            style="background-color: #d4c4a8;" aria-label="Cream beige"></button>
+                    <button class="color-swatch" id="colorTeal" data-color="teal" 
+                            style="background-color: #2a7a8a;" aria-label="Teal green"></button>
+                </div>
+                <button class="apply-btn" id="applyColorBtn">Apply Color</button>
+            </div>
+
+            <!-- Information Panel: Displays detailed product specs and reviews -->
+            <div class="control-panel info-panel" id="infoPanel">
+                <div class="panel-header">Product Details</div>
+                <div class="info-content">
+                    <div class="info-section">
+                        <h4>Specifications</h4>
+                        <ul>
+                            <li>Material: Premium Linen Blend</li>
+                            <li>Frame: Hardwood + Metal Springs</li>
+                            <li>Dimensions: 180×90×85 cm</li>
+                            <li>Weight: 45 kg</li>
+                            <li>Color Options: 5+ colors</li>
+                        </ul>
+                    </div>
+                    <div class="info-section">
+                        <h4>Features</h4>
+                        <ul>
+                            <li>✓ Removable Cushion Covers</li>
+                            <li>✓ Modular Design</li>
+                            <li>✓ British Craftsmanship</li>
+                            <li>✓ 12-Year Warranty</li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="apply-btn" id="closeInfoBtn">Close</button>
+            </div>
+
+            <!-- Placement Grid Panel: Shows spatial placement options -->
+            <div class="control-panel placement-panel" id="placementPanel">
+                <div class="panel-header">Room Placement</div>
+                <div class="room-preview">
+                    <!-- Top-down room view showing furniture placement -->
+                    <div class="room-canvas">
+                        <div class="room-wall wall-top"></div>
+                        <div class="room-wall wall-left"></div>
+                        <div class="room-wall wall-right"></div>
+                        <div class="room-wall wall-bottom"></div>
+                        <div class="furniture-preview" id="furniturePreview"></div>
+                    </div>
+                </div>
+                <div class="placement-buttons">
+                    <button class="placement-preset" id="placementA" data-position="a">Position A</button>
+                    <button class="placement-preset" id="placementB" data-position="b">Position B</button>
+                    <button class="placement-preset" id="placementC" data-position="c">Position C</button>
+                </div>
+                <button class="apply-btn" id="applyPlacementBtn">Apply Placement</button>
+            </div>
+
+            <!-- Bottom Control Bar: Gesture simulation buttons for web prototype -->
+            <div class="control-bar">
+                <button class="control-btn" id="gazeBtn" aria-label="Simulate gaze selection">
+                    👀 Gaze
+                </button>
+                <button class="control-btn" id="palmBtn" aria-label="Simulate palm gesture">
+                    ✋ Open Palm
+                </button>
+                <button class="control-btn" id="pointBtn" aria-label="Simulate pointing gesture">
+                    ☝️ Point
+                </button>
+                <button class="control-btn" id="grabBtn" aria-label="Simulate grab gesture">
+                    ✊ Grab
+                </button>
+                <button class="control-btn reset-btn" id="resetBtn" aria-label="Reset view">
+                    🔄 Reset
+                </button>
+            </div>
+
+            <!-- Interaction Feedback Panel: Shows detected gestures and actions -->
+            <div class="interaction-feedback" id="interactionFeedback">
+                <div class="feedback-label">Ready for interaction</div>
+            </div>
+
+        </div>
+
+        <!-- Corner Indicators: Show system state and tracking status -->
+        <div class="corner-indicator top-left">
+            <span class="indicator-dot"></span>
+            <span>Eye Tracking: ON</span>
+        </div>
+        <div class="corner-indicator top-right">
+            <span>Hand Tracking: ON</span>
+            <span class="indicator-dot"></span>
+        </div>
+        <div class="corner-indicator bottom-left">
+            <span class="indicator-dot"></span>
+            <span>Spatial Audio: ON</span>
+        </div>
+        <div class="corner-indicator bottom-right">
+            <span>Haptics: ON</span>
+            <span class="indicator-dot"></span>
+        </div>
+
+    </div>
+
+    <script src="task4.js"></script>
+</body>
+</html>
